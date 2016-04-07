@@ -1,0 +1,94 @@
+﻿@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@{
+    Page.Title = "Register";
+
+    Validation.RequireField("email", "You must specify an email address.");
+    Validation.RequireField("password", "You must specify a password.");
+    Validation.Add("confirmPassword",
+        Validator.Required("You must specify a confirm password."),
+        Validator.EqualsTo("password", "The new password and confirmation password do not match."));
+
+    //if (!ReCaptcha.Validate("PRIVATE_KEY")) {
+    //    ModelState.AddFormError("Captcha response was not correct.");
+    //}
+        
+    if (IsPost && Validation.IsValid() && ModelState.IsValid) 
+    {
+        // Execute validators and also check if any ReCaptcha errors are present.
+        var DisplayName = Request["DisplayName"];
+        var email = Request["email"];
+        var password = Request["password"];
+        var confirmPassword = Request["confirmPassword"];
+
+        // Create the user profile
+        var db = Database.Open("Airbrushing");
+
+        // Check if user already exists
+        var user = db.QuerySingle("SELECT Email FROM UserProfiles WHERE LOWER(Email) = LOWER(@0)", email);
+        if (user == null) 
+        {
+            // Insert email into the profile table
+            db.Execute("INSERT INTO UserProfiles (Email, DisplayName, Bio) VALUES (@0, @1, @2)", email, DisplayName, "");
+
+            // Create and associate a new entry in the membership database.
+            // If successful, continue processing the request
+            try 
+            {
+                WebSecurity.CreateAccount(email, password);
+                WebSecurity.Login(DisplayName, password);
+                Response.Redirect("~/");
+            }
+            catch (System.Web.Security.MembershipCreateUserException e) 
+            {
+                ModelState.AddFormError(e.ToString());
+            }
+        } 
+        else 
+        {
+            // User already exists
+            ModelState.AddFormError("Email address is already in use.");
+        }
+    }
+}
+
+<hgroup>
+    <h1>Account Creation</h1>
+    <h2>Use the form below to create a new account.</h2>
+</hgroup>
+
+<form method="post">
+    @Html.ValidationSummary("Account creation was unsuccessful. Please correct the errors and try again.", excludeFieldErrors: true, htmlAttributes: null)
+
+    <fieldset class="no-legend">
+        <legend>Account Creation</legend>
+        <ol>
+             <li>
+                <label for="DisplayName">User Name:</label>
+                <input type="text" name="DisplayName" title="User Name" placeholder="User Name" @Validation.For("DisplayName") />
+                @Html.ValidationMessage("DisplayName")
+            </li>
+            <li>
+                <label for="email">Email:</label>
+                <input type="text" name="email" title="Email address" placeholder="Email address" @Validation.For("email") />
+                @Html.ValidationMessage("email")
+            </li>
+            <li>
+                <label for="password">Password:</label>
+                <input type="password" name="password" title="Password" @Validation.For("password") />
+                @Html.ValidationMessage("password")
+            </li>
+            <li>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" name="confirmPassword" title="Confirm password" @Validation.For("confirmPassword") />
+                @Html.ValidationMessage("confirmPassword")
+            </li>
+        </ol>
+        <p class="form-actions">
+            <input type="submit" value="Register" title="Register" />
+        </p>
+    </fieldset>
+</form>

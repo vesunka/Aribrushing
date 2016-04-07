@@ -1,0 +1,142 @@
+﻿@{
+    var currentDateTime = DateTime.Now;
+
+}
+
+
+    <div id="site_content">
+      <div id="sidebar_container">
+        <div class="sidebar">
+          <h3>Latest News</h3>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <h6>January 1st, 2016</h6>
+          <p>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis.<br /><a href="~/">Read more</a></p>
+        </div>
+        <div class="sidebar">
+          <h3>Useful Links</h3>
+          <ul>
+            <li><a href="#">First Link</a></li>
+            <li><a href="#">Another Link</a></li>
+            <li><a href="#">And Another</a></li>
+            <li><a href="#">Last One</a></li>
+          </ul>
+        </div>
+		<div class="sidebar">
+		<div class="calendar">
+			<script lang="javascript" type="text/javascript">
+			var day_of_week = new Array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+			var month_of_year = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+
+			//  DECLARE AND INITIALIZE VARIABLES
+			var Calendar = new Date();
+
+			var year = Calendar.getFullYear();     // Returns year
+			var month = Calendar.getMonth();    // Returns month (0-11)
+			var today = Calendar.getDate();    // Returns day (1-31)
+			var weekday = Calendar.getDay();    // Returns day (1-31)
+
+			var DAYS_OF_WEEK = 7;    // "constant" for number of days in a week
+			var DAYS_OF_MONTH = 31;    // "constant" for number of days in a month
+			var cal;    // Used for printing
+
+			Calendar.setDate(1);    // Start the calendar day at '1'
+			Calendar.setMonth(month);    // Start the calendar month at now
+
+
+			// VARIABLES FOR FORMATTING
+			
+
+			var TR_start = '<tr>';
+			var TR_end = '</tr>';
+			var highlight_start = '<td width="15"><table cellspacing=0 bolder=1 background-color=D685FF bolder-color=242808><tr><td width=20><b><center>';
+			var highlight_end   = '</center></td></tr></table></B>';
+			var TD_start = '<td width="15"><center>';
+			var TD_end = '</center></td>';
+
+			// BEGIN CODE FOR CALENDAR
+			
+
+			cal =  '<table bolder=1 cellspacing=0 cellpadding=0 bolder-color=242808><tr><td>';
+			cal += '<table bolder=0 cellspacing=0 cellpadding=2>' + TR_start;
+			cal += '<td colspan="' + DAYS_OF_WEEK + '" bgcolor="D685FF"><center><b>';
+			cal += month_of_year[month]  + '   ' + year + '</b>' + TD_end + TR_end;
+			cal += TR_start;
+
+		
+
+			// LOOPS FOR EACH DAY OF WEEK
+			for(index=0; index < DAYS_OF_WEEK; index++)
+			{
+
+			// BOLD TODAY'S DAY OF WEEK
+			if(weekday == index)
+			cal += TD_start + '<b>' + day_of_week[index] + '</b>' + TD_end;
+
+			// PRINTS DAY
+			else
+			cal += TD_start + day_of_week[index] + TD_end;
+			}
+
+			cal += TD_end + TR_end;
+			cal += TR_start;
+
+			// FILL IN BLANK GAPS UNTIL TODAY'S DAY
+			for(index=0; index < Calendar.getDay(); index++)
+			cal += TD_start + '  ' + TD_end;
+
+			// LOOPS FOR EACH DAY IN CALENDAR
+			for(index=0; index < DAYS_OF_MONTH; index++)
+			{
+			if( Calendar.getDate() > index )
+			{
+			  // RETURNS THE NEXT DAY TO PRINT
+			  week_day =Calendar.getDay();
+
+			  // START NEW ROW FOR FIRST DAY OF WEEK
+			  if(week_day == 0)
+			  cal += TR_start;
+
+			  if(week_day != DAYS_OF_WEEK)
+			  {
+
+			  // SET VARIABLE INSIDE LOOP FOR INCREMENTING PURPOSES
+			  var day  = Calendar.getDate();
+
+			  // HIGHLIGHT TODAY'S DATE
+			  if( today==Calendar.getDate() )
+			  cal += highlight_start + day + highlight_end + TD_end;
+
+			  // PRINTS DAY
+			  else
+			  cal += TD_start + day + TD_end;
+			  }
+
+			  // END ROW FOR LAST DAY OF WEEK
+			  if(week_day == DAYS_OF_WEEK)
+			  cal += TR_end;
+			  }
+
+			  // INCREMENTS UNTIL END OF THE MONTH
+			  Calendar.setDate(Calendar.getDate()+1);
+
+			}// end for loop
+
+			cal += '</td></tr></table></table>';
+
+			//  PRINT CALENDAR
+			document.write(cal);
+
+			//  End -->
+			</script>
+		</div>
+        </div>
+      </div>
+      <div class="content">
+        <h3>Lorem ipsum dolor sit amet, aenean</h3>
+        <p>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis, mattis metus lacus in nullam faucibus pede, dolor suscipit ultrices maecenas justo. Est ipsum. Mattis pellentesque tincidunt euismod dictumst natoque, nulla non eget pede, amet vestibulum iaculis dolor, integer metus est tortor libero.<strong>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis, mattis metus lacus in nullam faucibus pede, dolor suscipit ultrices maecenas justo.</strong>.</p>
+        <p>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis, mattis metus lacus in nullam faucibus pede,</p>
+        <p>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis, mattis metus lacus in nullam faucibus pede,</p>
+        <p>Lorem ipsum dolor sit amet, aenean lectus ut morbi convallis arcu duis, mattis metus lacus in nullam faucibus pede, dolor suscipit ultrices maecenas justo. Est ipsum. Mattis pellentesque tincidunt euismod dictumst natoque, nulla non eget pede, amet vestibulum iaculis dolor, integer metus est tortor libero.</p>
+      </div>
+    </div>
+ 

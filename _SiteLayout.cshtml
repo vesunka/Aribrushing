@@ -1,0 +1,105 @@
+﻿@{
+    var currentDateTime = DateTime.Now;
+
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Airbrushing @Page.Title</title>
+        
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="description" content="website description" />
+        <meta name="keywords" content="website keywords, website keywords" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="~/Content/style.css" />
+        <!-- modernizr enables HTML5 elements and feature detects -->
+        <script type="text/javascript" src="~/Scripts/modernizr-1.5.min.js"></script>
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+        <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+        
+        @RenderSection("Scripts", required: false)
+    </head>
+
+<body>
+        
+  <div id="main">
+    <header>
+    <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_", allows you to change the colour of the text -->
+          <h1><a href="~/">Rain<span class="logo_">bow</span></a></h1>
+          <h2>Airbrushing - Right now it's: @currentDateTime</h2>
+        </div>
+        <div id="login">
+        @if (WebSecurity.IsAuthenticated)
+            {
+            <span>
+                Welcome <strong>@WebSecurity.CurrentUserName</strong>!
+                <a href="~/Account/Logout" title="Logout">Logout</a>
+            </span>
+            }
+        else
+            {
+                <a href="~/Account/Login" title="Login">Login</a>
+            }
+        </div>
+        <p></p>
+    </div>
+      <nav>
+        <div id="menu_container">
+          <ul class="sf-menu" id="nav">
+            <li><a href="~/">Home</a></li>
+            <li><a href="~/ArtStuff">Art Shop</a></li>
+            
+            <li><a href="~/Galleries">Galleries</a>
+              <ul>
+                <li><a href="~/Galleries">Galleries</a></li>
+                <li><a href="~/New">Create New</a></li>
+                <li><a href="~/Tag">Tags</a></li>
+                <li><a href="~/User">Account</a></li>
+                <li><a href="~/">Another Page</a>
+                    <ul>
+                        <li><a href="~/">Another Page</a></li>
+                        <li><a href="~/">Another Page</a></li>
+                        
+                    </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="~/Contact">Contact Us</a>
+                <ul>
+                    <li><a href="~/EmailRequest">Assistance</a></li>
+                    <li><a href="~/SendFile">Send File</a></li>
+                    <li><a href="~/">Another Page</a></li>
+                </ul>
+            </li>
+            <li><a href="~/Account/Register">Register</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div id="site_content">
+      <div id="body">
+         @RenderBody()
+      </div>
+    </div>
+    <footer>
+      <p>Copyright &copy;@DateTime.Now.Year Aibrushing | <a href="#">Rainbow</a></p>
+    </footer>
+  </div>
+  <p>&nbsp;</p>
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="~/Scripts/jquery.js"></script>
+  <script type="text/javascript" src="~/Scripts/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="~/Scripts/jquery.sooperfish.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+  </script>
+
+</body>
+</html>

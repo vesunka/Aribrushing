@@ -1,0 +1,35 @@
+﻿
+@{
+    Page.Title = "Art Shop";
+    var db = Database.Open("Airbrushing");
+    var products = db.Query("SELECT * FROM PRODUCTS").ToList();
+    var featured = products[new Random().Next(products.Count)];
+}
+
+<h1>Art Gallery!</h1>
+
+
+<div id="productsWrapper">
+    <ul id="products" data-role="listview" data-inset="true">
+        @foreach (var p in products) {
+            <li class="product">
+                <a href="~/order/@p.Id" title="Order @p.Name">
+                    <div class="productInfo">
+                        
+                        <p class="description">@p.Description</p>
+                        <h6>@p.Name</h6>
+                        <img class="product-image hide-from-mobile" src="~/Images/Products/Thumbnails/@p.ImageName" alt="Image of @p.Name" />
+                        <p class="price hide-from-desktop">$@string.Format("{0:f}", p.Price)</p>                    
+                    </div>
+                </a>
+
+                <!-- Desktop only -->
+                <div class="action  hide-from-mobile">
+                    <p class="price">$@string.Format("{0:f}", p.Price)</p>
+                    <a class="order-button" href="~/order/@p.Id" title="Order @p.Name">Order Now</a>
+                </div>
+                 
+            </li>
+        }
+    </ul>
+</div>
